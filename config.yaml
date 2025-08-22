@@ -1,0 +1,97 @@
+device_code1: "28254"
+# 定义设备编号
+# device_code1 = '0071154316110261'       # 会泽1
+# device_code1 = '9991180324070008'       # 会泽2
+# device_code1 = '9991180324070001'       # 保山1
+# device_code1 = '9991180324070002'       # 保山2
+# device_code1 = '9991180324070003'       # 保山3，7
+# device_code1 = '9991180324070004'       # 保山4
+# device_code1 = '9991180324070005'       # 保山5
+# device_code1 = '9991180324070006'       # 保山6
+# device_code1 = '0021145319062069'       # 泸西
+# device_code1 = '0171170315123001'       # 马龙
+# device_code1 = '28254'  # 测试
+
+
+source_points: [[812, 189], [1075, 188], [852, 1080], [-431, 1080]]
+target_width: 6
+target_height: 80
+up_line: 20
+down_line: 40
+
+# parse_opt函数的相关参数
+#current_weights: "39259/30.pt"  # model path or triton URL
+current_weights: "weight/39314/best.pt"  # model path or triton URL
+current_source: "video/ThreeInOne.mp4"  # file/dir/URL/glob/screen/0(webcam)
+
+
+current_data: "yolov5/data/coco128.yaml"  # dataset.yaml path
+current_imgsz: [640]  # inference size (height, width)
+current_conf_thres: 0.25  # 目标置信度目标筛选
+current_iou_thres: 0.45  # NMS IoU threshold
+current_max_det: 1000  # 最大检测目标数
+current_device: 0  # 使用GPU
+current_view_img: False  # 显示视频
+current_save_txt: True  # 保存计数txt文件
+current_save: True  # 保存识别后的图片或视频
+current_ref_time: "2025-01-01 00:00:00"
+current_classes: None   # 过滤类别
+current_agnostic_nms: False  # class-agnostic NMS
+current_augment: False  # 增强推理
+current_visualize: False  # 可视化特征
+current_update: False  # 更新所有模型
+current_project_dir: 'runs/detect'  # 保存结果的目录
+current_name: 'exp8_2'  # 保存结果的文件夹名称
+current_exist_ok: False  # 如果存在同名文件夹，是否继续
+current_half: False  # 使用FP16半精度推理
+current_dnn: False  # 使用OpenCV DNN进行ONNX推理
+current_vid_stride: 1  # video frame-rate stride
+current_camera_device: '192.168.10.3'  # 摄像头设备
+# current_camera_device: '192.168.10.10' 
+
+
+configurations:
+  - time_range: "0:00:00-00:15:00"
+    source: "inference/images/2.mp4"
+    weights: "yolov5/weights/night.pt"
+    save_dir: "inference/output/night"
+  - time_range: "0:15:00-00:17:00"
+    source: "inference/images/2.mp4"
+    weights: "yolov5/weights/day.pt"
+    save_dir: "inference/output/daytime"
+  - time_range: "0:17:00-00:33:00"
+    source: "inference/images/2.mp4       "
+    weights: "yolov5/weights/night.pt"
+    save_dir: "inference/output/night"
+  - time_range: "0:33:00-00:34:00"
+    source: "inference/images/2.mp4"
+    weights: "yolov5/weights/day.pt"
+    save_dir: "inference/output/daytime"
+  - time_range: "0:34:00-23:35:00"
+    source: "inference/images/2.mp4"
+    weights: "yolov5/weights/night.pt"
+    save_dir: "inference/output/night"
+
+
+# 全局运行线程控制变量
+current_run_thread: None
+stop_run_flag: false  # 用于控制程序的运行
+
+# 车辆类型映射表，用于标记上传数据中的车辆类型
+uploadNameMap:
+  "Motorcycle": Motorcycle
+  "Car": MidsizeCar
+  "Bus": LargeBus
+  "Tractor": Tractor
+  "L_truck": SmallTruck
+  "XL_truck": MediumTruck
+  "XXL_truck": LargeTruck
+  "XXXL_truck": OversizeTruck
+  "Container car": ContainerTruck
+  "Electric vehicle": 0
+  "Total": 0
+
+
+
+FPS: 10
+COUNT_NUMBER: 0
